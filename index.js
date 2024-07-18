@@ -6,21 +6,16 @@ const cors = require("cors");
 
 
 // Allow only the Vercel frontend origin
-const allowedOrigins = ["https://bitter-eight.vercel.app"];
+// const allowedOrigins = ["https://bitter-eight.vercel.app"];
 
 app.use(express.json());
 app.use(cors({
-  origin: function (origin, callback) {
-    // Allow requests with no origin like mobile apps, curl requests
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-  credentials: true, // if you want to allow cookies to be sent with requests
-}));
+  origin: ["https://bitter-eight.vercel.app"], //allow request only from these site
+  methods: ["GET","POST","PUT","DELETE"],
+  credentials: true, //for getting cookies and other headers from backend
+  samesite : "none",
+  secure: true,
+}))
 
 const db = require("./models");
 
